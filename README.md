@@ -1,6 +1,6 @@
 # Cypress API Tests - ServeRest
 
-API test automation project built with Cypress and JavaScript for the ServeRest API, organized by domain and supported by reusable custom commands [1][2].
+API test automation project built with Cypress and JavaScript for the ServeRest API, organized by domain and supported by reusable custom commands.
 
 ## Project structure
 
@@ -30,7 +30,7 @@ cypress-project/
 └─ README.md
 ```
 
-This structure separates specs, fixtures, and support commands to improve maintainability, scalability, and reuse across authentication, product, and cart scenarios [1][2].
+This structure separates specs, fixtures, and support commands to improve maintainability, scalability, and reuse across authentication, product, and cart scenarios.
 
 ## Technologies
 
@@ -38,11 +38,11 @@ This structure separates specs, fixtures, and support commands to improve mainta
 - JavaScript
 - ServeRest API
 
-Cypress supports API testing with `cy.request()`, as well as hooks, fixtures, and custom commands, which fits well with the organization used in this project [3].
+Cypress supports API testing with `cy.request()`, as well as hooks, fixtures, and custom commands, which fits well with the organization used in this project.
 
 ## Configuration
 
-The `cypress.config.js` file centralizes the API base URL and the spec location pattern, allowing the use of relative routes such as `/login`, `/produtos`, and `/carrinhos` [1][2].
+The `cypress.config.js` file centralizes the API base URL and the spec location pattern, allowing the use of relative routes such as `/login`, `/produtos`, and `/carrinhos`.
 
 Example:
 
@@ -61,7 +61,7 @@ module.exports = defineConfig({
 
 ## Fixtures
 
-Fixtures store reusable static test data for positive and negative login and product scenarios, reducing duplication and making the tests easier to read [3].
+Fixtures store reusable static test data for positive and negative login and product scenarios, reducing duplication and making the tests easier to read.
 
 ### `cypress/fixtures/login.json`
 
@@ -73,19 +73,19 @@ Contains examples such as:
 - `missingPasswordUser`
 - `emptyBody`
 
-These data sets support the documented `POST /login` validations, including successful authentication and `401` responses for invalid or incomplete credentials [1].
+These data sets support the documented `POST /login` validations, including successful authentication and `401` responses for invalid or incomplete credentials.
 
 ### `cypress/fixtures/products.json`
 
-Contains base product payloads used as a starting point for unique-name and duplicate-name scenarios in the `POST /produtos` endpoint [1].
+Contains base product payloads used as a starting point for unique-name and duplicate-name scenarios in the `POST /produtos` endpoint.
 
 ## Support
 
-The `cypress/support` folder contains custom commands and the global Cypress bootstrap layer [3].
+The `cypress/support` folder contains custom commands and the global Cypress bootstrap layer.
 
 ### `e2e.js`
 
-This file imports `./commands`, making all custom commands available to every spec [3].
+This file imports `./commands`, making all custom commands available to every spec.
 
 ```js
 import './commands'
@@ -93,7 +93,7 @@ import './commands'
 
 ### `commands.js`
 
-This file acts as an aggregator and imports the command modules by domain [3].
+This file acts as an aggregator and imports the command modules by domain.
 
 ```js
 import './commands/auth.commands'
@@ -104,7 +104,7 @@ import './commands/carts.commands'
 
 ## Custom commands
 
-The commands are split by domain to improve organization and maintenance [3].
+The commands are split by domain to improve organization and maintenance.
 
 ### `auth.commands.js`
 
@@ -113,7 +113,7 @@ Contains:
 - `cy.loginApi()`
 - `cy.createAuthenticatedAdminSession()`
 
-These commands allow authentication with an existing user or the creation of a complete admin session for scenarios that require a valid token and administrator permission, such as product creation and cart creation [1].
+These commands allow authentication with an existing user or the creation of a complete admin session for scenarios that require a valid token and administrator permission, such as product creation and cart creation.
 
 ### `users.commands.js`
 
@@ -121,7 +121,7 @@ Contains:
 
 - `cy.createRandomUser()`
 
-This command creates dynamic users with `administrador: 'true'` or `administrador: 'false'`, which helps avoid data collisions and enables authorization scenarios such as validating `403` for administrator-only routes [1].
+This command creates dynamic users with `administrador: 'true'` or `administrador: 'false'`, which helps avoid data collisions and enables authorization scenarios such as validating `403` for administrator-only routes.
 
 ### `products.commands.js`
 
@@ -129,7 +129,7 @@ Contains:
 
 - `cy.createProduct()`
 
-This command centralizes authenticated product creation for scenarios where `POST /produtos` should return `201` on success or `400` for duplicate product names [1].
+This command centralizes authenticated product creation for scenarios where `POST /produtos` should return `201` on success or `400` for duplicate product names.
 
 ### `carts.commands.js`
 
@@ -137,13 +137,13 @@ Contains:
 
 - `cy.createCart()`
 
-This command wraps `POST /carrinhos`, which binds the cart to the user from the `Authorization` token and allows only one cart per user [2].
+This command wraps `POST /carrinhos`, which binds the cart to the user from the `Authorization` token and allows only one cart per user.
 
 ## Implemented specs
 
 ### `auth/login.cy.js`
 
-Validates the `POST /login` endpoint with the following scenarios [1]:
+Validates the `POST /login` endpoint with the following scenarios:
 
 - `200` with message `Login realizado com sucesso`
 - `authorization` field returned
@@ -154,22 +154,22 @@ Validates the `POST /login` endpoint with the following scenarios [1]:
 - `401` for missing password
 - `401` for empty body
 
-The spec uses a dynamically created user before the suite runs to avoid dependency on pre-existing fixed credentials [3].
+The spec uses a dynamically created user before the suite runs to avoid dependency on pre-existing fixed credentials.
 
 ### `products/create-product.cy.js`
 
-Validates the `POST /produtos` endpoint with the following documented scenarios [1]:
+Validates the `POST /produtos` endpoint with the following documented scenarios:
 
 - `201` for successful creation
 - `400` for duplicated product name
 - `401` for missing, invalid, or expired token
 - `403` for administrator-only route
 
-The tests use a dynamic admin session and also create a non-admin user to validate the forbidden authorization scenario [1].
+The tests use a dynamic admin session and also create a non-admin user to validate the forbidden authorization scenario.
 
 ### `carts/list-carts.cy.js`
 
-Validates the `GET /carrinhos` endpoint with deterministic setup created through the API before the assertions run [2].
+Validates the `GET /carrinhos` endpoint with deterministic setup created through the API before the assertions run.
 
 Covered scenarios:
 
@@ -178,7 +178,7 @@ Covered scenarios:
 - cart uniqueness per user verification
 - filters by `_id`, `idUsuario`, `precoTotal`, and `quantidadeTotal`
 
-The setup creates an admin user, authenticates, creates a product, and creates a cart with `POST /carrinhos`, reducing dependency on pre-existing environment data [2].
+The setup creates an admin user, authenticates, creates a product, and creates a cart with `POST /carrinhos`, reducing dependency on pre-existing environment data.
 
 ## How to run
 
@@ -210,15 +210,15 @@ npx cypress run --spec cypress/e2e/carts/list-carts.cy.js
 
 ## Applied best practices
 
-- Dynamic data usage to avoid collisions between test executions [3]
-- Separation between test data, reusable logic, and test scenarios [3]
-- Domain-based custom commands for better readability [3]
-- Use of `failOnStatusCode: false` in negative scenarios to validate 4xx responses without automatic Cypress failure [3]
-- Deterministic setup for listing tests that depend on existing data [2]
+- Dynamic data usage to avoid collisions between test executions
+- Separation between test data, reusable logic, and test scenarios
+- Domain-based custom commands for better readability
+- Use of `failOnStatusCode: false` in negative scenarios to validate 4xx responses without automatic Cypress failure
+- Deterministic setup for listing tests that depend on existing data
 
 ## Suggested next steps
 
 - Add response schema validation
-- Create negative tests for `POST /carrinhos`, including duplicated product, nonexistent product, and insufficient quantity [2]
+- Create negative tests for `POST /carrinhos`, including duplicated product, nonexistent product, and insufficient quantity
 - Add data cleanup when needed for repeatable pipeline executions
 - Evolve the custom commands with typing and additional documentation
