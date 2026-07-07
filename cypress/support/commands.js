@@ -1,3 +1,8 @@
+import './commands/auth.commands'
+import './commands/users.commands'
+import './commands/products.commands'
+import './commands/carts.commands'
+
 Cypress.Commands.add('login', (email, password) => {
   cy.visit('/login');
   cy.get('#email').clear().type(email);
